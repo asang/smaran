@@ -1,10 +1,10 @@
 [![Build Status](https://travis-ci.org/asang/smaran.svg?branch=master)](https://travis-ci.org/asang/smaran) 
 
 # Smaran: RoR based secure personal information management system
-Smaran is a [Ruby On Rails](http://rubyonrails.org) Ruby On Rails based secure
-password and personal information management system (aka Account Management)
-system. Password, Url, Comments and other critical information in encrypted
-form inside the database. It also supports following  addition features
+Smaran is a [Ruby On Rails](http://rubyonrails.org) based secure password and
+personal information management (aka Account Management) system. Password, Url,
+Comments and other critical information in encrypted form inside the database.
+It also supports following  addition features
 
 * Accounts can be assigned `labels` (similar to gmail labels) - which allows
   you to classify them in one or more groups
