@@ -84,3 +84,4 @@ gem 'actionpack-action_caching'
 gem 'execjs'
 gem 'therubyracer', :platforms => :ruby
 gem 'less-rails'
+gem 'codeclimate-test-reporter', group: :test, require: nil

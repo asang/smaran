@@ -4,6 +4,11 @@ rvm:
 notifications:
   recipients:
     - asang.dani@gmail.com
+
+addons:
+  code_climate:
+    repo_token: 22e8880806b5651e04b7c62ef767585f61c71927fc9404d9359ec9382abd57d7
+
 script:
   - bundle exec rake db:migrate
   - bundle exec rspec -fd .
