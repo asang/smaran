@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/asang/smaran.svg?branch=master)](https://travis-ci.org/asang/smaran) 
 [![Code Climate](https://codeclimate.com/github/asang/smaran.png)](https://codeclimate.com/github/asang/smaran)
+[![Test Coverage](https://codeclimate.com/github/asang/smaran/badges/coverage.svg)](https://codeclimate.com/github/asang/smaran)
 
 You can chat with us using Gitter:
 
