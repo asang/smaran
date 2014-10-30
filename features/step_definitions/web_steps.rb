@@ -5,7 +5,7 @@ end
 Then /^(?:|I )should be on the (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
   if current_path.respond_to? :should
-    current_path.should == path_to(page_name)
+    expect(current_path).to eql(path_to(page_name))
   else
     assert_equal path_to(page_name), current_path
   end
@@ -18,14 +18,14 @@ def do_match(content, parent, negate)
       if negate
         page.should_not have_content("#{content}")
       else
-        page.should have_content("#{content}")
+        expect(page).to have_content("#{content}")
       end
     end
   else
     if negate
-      page.should_not have_content("#{content}")
+      expect(page).to_not have_content("#{content}")
     else
-      page.should have_content("#{content}")
+      expect(page).to have_content("#{content}")
     end
   end
 end

@@ -5,7 +5,7 @@ When(/^I fill in account details$/) do
 end
 
 Then(/^page should have notice message "(.*?)"$/) do |arg1|
-  page.should have_content($1)
+  expect(page).to have_content($1)
 end
 
 When(/^An account has been created$/) do
@@ -16,18 +16,18 @@ When(/^I delete the account$/) do
   @account.destroy
 end
 Then(/^page should have account name$/) do
-  page.should have_content(@account.name)
+  expect(page).to have_content(@account.name)
 end
 
 When(/^I submit new log "([^"]*)"$/) do |log|
   fill_in 'comment_content', with: log
   click_link_or_button 'Add New Log'
-  current_path.should == account_path(@account)
+  expect(current_path).to eql(account_path(@account))
 end
 
 Then(/^page should have log "([^"]*)"$/) do |log|
   within('#logs') do
-    page.should have_content(log)
+    expect(page).to have_content(log)
   end
 end
 
@@ -38,7 +38,7 @@ When(/^I delete the log entry$/) do
 end
 
 Then(/^page should not have log entries$/) do
-  page.should_not have_selector('#logs')
+  expect(page).to_not have_selector('#logs')
 end
 
 When(/^I submit new attachment "([^"]*)"$/) do |attachment|
@@ -66,7 +66,7 @@ Then(/^attachment "([^"]*)" contents should match$/) do |attachment|
 end
 
 Then(/^page should not have any attachments$/) do
-  page.should_not have_selector('#attachments')
+  expect(page).to_not have_selector('#attachments')
   check_file_presence([@last_attachment_path], false)
 end
 
