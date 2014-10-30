@@ -1,15 +1,14 @@
 # Smaran: RoR based secure personal information management system
-Smaran is a [Ruby On Rails](http://rubyonrails.org) web based Personal
-Information Management (aka Account Management) system. Password, Url, Comments
-and other critical information in encrypted form inside the database. It also
-supports following  addition features
+Smaran is a [Ruby On Rails](http://rubyonrails.org) Ruby On Rails based secure
+password and personal information management system (aka Account Management)
+system. Password, Url, Comments and other critical information in encrypted
+form inside the database. It also supports following  addition features
 
 * Accounts can be assigned `labels` (similar to gmail labels) - which allows
   you to classify them in one or more groups
 * Account editing supports `redo/undo` functionality
 * PDF, csv and excel export (single account, all account or all accounts
   belonging to a label) is supported
-*
 
 ### Pre-requisites
 
