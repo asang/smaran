@@ -1,0 +1,101 @@
+<%= form_for(@account, :html => { :multipart => true }) do |f| %>
+  <% if @account.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h2>
+
+      <ul>
+        <% @account.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, "Account Name" %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :url, "URL" %><br />
+    <%= f.text_field :url, :size => 40 %>
+  </div>
+  <div class="field">
+    <%= f.label :username, "Login ID" %><br />
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password, value: @account.password, :size => 20 %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation, "Confirm" %><br />
+    <%= f.password_field :password_confirmation, value: @account.password, :size => 20 %>
+  </div>
+  <div class="field">
+    <%= f.label "Account Details" %> (
+	<%= link_to 'Markdown syntax',
+		'https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables',
+		:target => '_blank' %> )<br/>
+    <%= f.text_area :comments, :size => "60x20" %>
+  </div>
+  <div class="field" id="labels">
+    <%= f.label :Labels %><br />
+    <% if Label.count > 3 %>
+      <table>
+        <tr>
+      <%
+      start_idx = 0
+      end_idx = 0
+      while true
+        end_idx = start_idx + 2
+        if end_idx >= Label.count - 1
+          end_idx = Label.count - 1
+        end
+      %>
+          <td valign="top">
+           <% for label in Label.sorted_labels[start_idx..end_idx] %>
+             <div>
+               <%= check_box_tag "account[label_ids][]", label.id,
+                 @account.labels.include?(label) %>
+               <%= label.name %>
+             </div>
+           <% end %>
+          </td>
+          <%
+            start_idx = end_idx + 1
+            break if end_idx >= Label.count - 1
+          %>
+       <% end %>
+        </tr>
+      </table>
+    <% else %>
+       <% for label in Label.sorted_labels %>
+         <div>
+           <%= check_box_tag "account[label_ids][]", label.id,
+             @account.labels.include?(label) %>
+           <%= label.name %>
+         </div>
+       <% end %>
+    <% end %>
+  </div>
+  <p>
+    Pending Attachments: (Max of <%= Account::Max_Attachments %>
+    each under <%= Account::Max_Attachment_Size/1.megabyte %>MB)
+    <% if @account.assets.count <= Account::Max_Attachments %>
+      <%= f.label :assets, "Attachment" %>
+      <%= f.file_field :assets %>
+    <% end %>
+  </p>
+  <% if @account.assets.any? %>
+	  <p>
+		Attached Files:
+	  <div id="attachment_list">
+        <%= render :partial => "share/attachment",
+            :collection => @account.assets %>
+	  </div>
+	  </p>
+  <% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

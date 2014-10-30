@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Account details for <%= @account.name %></h1>
+  <fieldset class="section">
+    <legend>Accounts details for <%= @account.name %></legend>
+    <p>
+      <b>URL:</b>
+      <%= link_to "#{@account.url}",
+        @account.url, {:target => "_blank" } %>
+    </p>
+    <p>
+      <b>Username:</b>
+      <%= @account.username %>
+    </p>
+    <p>
+      <b>Password:</b>
+      <%= @account.password %>
+    </p>
+    <p>
+      <b>Comments:</b>
+      <%=raw RedCloth.new(@account.comments).to_html unless @account.comments.nil? %>
+    </p>
+  </fieldset>
+  </body>
+</html>

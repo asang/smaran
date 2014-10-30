@@ -1,0 +1,36 @@
+<h2>Listing Labels</h2>
+<% if notice %>
+    <p id="notice"><%= raw(notice) %></p>
+<% end %>
+<table id="item-list">
+  <tr>
+    <th><%= sortable "name", "Label", "Label" %></th>
+    <th><%= sortable "description", "Label", "Description" %></th>
+    <th><%= sortable "accounts.length", "No. of Accounts", "No. of Accounts" %></th>
+    <th>Actions</th>
+  </tr>
+
+  <% @labels.each do |label| %>
+    <tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+      <td><%= label.name %> </td>
+      <td><%= link_to label.description, label_path(label) %> </td>
+      <% if not label.accounts.nil? %>
+      	<td><%= label.accounts.length %></td>
+	  <% else %>
+      	<td>0</td>
+	  <% end %>
+      <td>
+        <%= link_to 'Save as PDF', label_path(label, :format => 'pdf') %> |
+        <%= link_to 'Edit', edit_label_path(label) %>
+          | <%= link_to 'Remove', label,
+            data: { confirm: "Are you sure you want to delete #{label.name}?" },
+            :method => :delete %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<br />
+
+<%= link_to 'Back', accounts_path %> |
+<%= link_to 'Create Label', new_label_path %>

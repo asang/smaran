@@ -1,0 +1,8 @@
+<% if !attachment.nil? and !attachment.id.nil? %>
+  <li id='attachment_<%=attachment.id %>'>
+    <a href='<%=attachment.url %>'><%=attachment.name %></a> (<%=attachment.file_size/1.kilobyte %>KB)
+        - <%=h attachment.updated_at.to_date.to_s(:rfc822) %>
+    <%= link_to "Remove", attachment, method: :delete,
+        data: { confirm: "Are you sure you want to delete #{attachment.name}?" } %>
+  </li>
+<% end %>

@@ -1,0 +1,17 @@
+<% if @comments.count > 0 %>
+    <table id="item-list">
+      <% @comments.each_with_index do |l, i| %>
+          <tr style="border: 1px ; border-color: black">
+            <td style="vertical-align: top; text-align: left"><%= serial_number(i) %>.</td>
+            <td>
+              <%=h l.content %>
+              &nbsp;&nbsp;on
+              <i><%=h l.updated_at.strftime('%d, %b %y %l:%M %p (%Z)') %></i>
+              <%= link_to "Remove", [@commentable, l],
+                    data: { confirm: "Are you want to delete comment?" },
+                    :method => :delete %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>

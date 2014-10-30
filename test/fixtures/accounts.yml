@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  id: MyString
+#  name: Asang Dani
+#  encrypted_url: http://google.com/
+#  encrypted_password: MyString
+#  encrypted_comments: My secrets
+#  username: you@example.com

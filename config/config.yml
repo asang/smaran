@@ -1,0 +1,17 @@
+development:
+  master_key: 'USE_REALLY_STRONG_ALPHANUMERIC_KEY'
+  recaptcha_private_key: '<Add_Your_Key_Here>'
+  password_to: you@example.com
+  pdf_key: password
+
+production:
+  master_key: 'USE_REALLY_STRONG_ALPHANUMERIC_KEY'
+  recaptcha_private_key: '<Add_Your_Key_Here>'
+  password_to: you@example.com
+  pdf_key: password
+
+test:
+  master_key: 'USE_REALLY_STRONG_ALPHANUMERIC_KEY'
+  recaptcha_private_key: '<Add_Your_Key_Here>'
+  password_to: you@example.com
+  pdf_key: password

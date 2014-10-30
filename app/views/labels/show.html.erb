@@ -1,0 +1,33 @@
+<h2>Listing Accounts for label <%= @label.name %></h2>
+<p id="notice"><%= notice %></p>
+<% if not @label.errors.nil? and @label.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@label.errors.count, "error") %> prohibited this label from being saved/updated:</h2>
+      <ul>
+        <% @label.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
+
+<p>
+  <b>Name:</b>
+  <%= @label.name %>
+</p>
+<p>
+  <b>Description:</b>
+  <%= @label.description %>
+</p>
+<p>
+  <b>Accounts:</b>
+  <%= render 'share/list', :list => @label.sorted_accounts %>
+</p>
+
+<%= link_to 'Save as PDF', label_path(@label, :format => 'pdf') %> |
+<%= link_to 'Edit', edit_label_path(@label) %> |
+<%= link_to 'Back', :back %> |
+<%= link_to 'Create Another Label', new_label_path %> |
+<%= link_to "Remove", @label,
+      data: { confirm: "Are you sure you want to delete #{@label.name}?" },
+      :method => :delete %>

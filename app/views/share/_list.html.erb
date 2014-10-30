@@ -1,0 +1,48 @@
+<!--
+  Will paginate plugin 'infers' the controller name and paginates as per that
+  So when this partial is called from Labels Controller, hell breaks loose.
+-->
+<% if controller.is_a?(AccountsController) %>
+  <div class="apple_pagination">
+    <div class="page_info">
+      <%= page_entries_info @accounts %>
+    </div>
+    <%= will_paginate @accounts %>
+  </div>
+<% end %>
+<table id="item-list" class="<%= table_class %>">
+  <tr>
+    <th>Sr. No.</th>
+    <th><%= sortable "name", "Account", "Name" %></th>
+    <th>User Name</th>
+    <th>URL</th>
+    <th><%= sortable "updated_at", "Account", "Last Updated" %></th>
+    <th>Actions</th>
+  </tr>
+  <% list.each_with_index do |account, i| %>
+    <tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+      <td><%= serial_number(i) %></td>
+      <% if session[:hide_passwords].nil? or not session[:hide_passwords] %>
+        <td><%= link_to account.name, account_path(account),
+                    {:title => "#{account.password}"} %></td>
+      <% else %>
+        <td><%= link_to account.name, account_path(account) %></td>
+      <% end %>
+      <td><%= account.username %></td>
+      <td><%= link_to truncate("#{account.url}", :length => 20),
+          account.url, {:target => "_blank", :title => "#{account.url}" } %>
+      </td>
+      <td><%=h account.updated_at.to_date.to_s(:rfc822) %></td>
+      <td class="list-actions">
+        <%= link_to 'Edit', edit_account_path(account) %> |
+        <%= link_to "Duplicate", {:id => account.id,
+          :action => "duplicate", :controller => 'accounts'} %> |
+        <%= link_to "Email", {:id => account.id,
+          :action => "send_by_email", :controller => 'accounts'} %> |
+         <%= link_to "Remove", account,
+          data: { confirm: "Are you sure you want to delete #{account.name}?" },
+          :method => :delete %>
+      </td>
+    </tr>
+  <% end %>
+</table>
