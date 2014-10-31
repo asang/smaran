@@ -15,7 +15,7 @@ class UserSessionsController < ApplicationController
         format.html { render :action => "new", :notice => flash[:alert] }
         format.xml  { render :xml => @user_session.errors,
               :status => :unprocessable_entity }
-      end 
+      end
     else
       if @user_session.save
         flash[:notice] = "Successfully logged in."

@@ -59,8 +59,7 @@ class LabelsController < ApplicationController
         format.html { redirect_to(@label, :notice => 'Label was successfully created.') }
         format.xml  { render :xml => @label, :status => :created, :location => @label }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @label.errors, :status => :unprocessable_entity }
+        handle_error( format, @label, 'new' )
       end
     end
   end
@@ -74,8 +73,7 @@ class LabelsController < ApplicationController
         format.html { redirect_to(@label, :notice => 'Label was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @label.errors, :status => :unprocessable_entity }
+        handle_error( format, @label, 'edit' )
       end
     end
   end
@@ -88,8 +86,7 @@ class LabelsController < ApplicationController
         format.html { redirect_to(labels_url, :notice => "Label was removed") }
         format.xml  { head :ok }
       else
-        format.html { render action: :show }
-        format.xml  { render :xml => @label.errors, :status => :unprocessable_entity }
+        handle_error( format, @label, :show )
       end
     end
   end

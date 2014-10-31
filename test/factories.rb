@@ -6,8 +6,6 @@ FactoryGirl.define do
     f.password            "foobar123"
     f.password_confirmation { |u| u.password }
     f.sequence(:comments) { |n| "Comments for foo#{n}" }
-#    f.sequence(:encrypted_comments) { |n| Encryptor.encrypt(value: "Comments for foo#{n}",
-#                                          :key => APP_CONFIG['master_key']) }
   end
 
   factory :user do |f|

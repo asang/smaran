@@ -76,8 +76,7 @@ class AccountsController < ApplicationController
                           notice: "Account was successfully created. #{undo_link}") }
         format.xml  { render :xml => @account, :status => :created, :location => @account }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
+        handle_error(format, @account, 'new')
       end
     end
   end
@@ -93,8 +92,7 @@ class AccountsController < ApplicationController
                             notice: "Account was successfully updated. #{undo_link}") }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
+        handle_error(format, @account, 'edit')
       end
     end
   end
@@ -175,6 +173,5 @@ class AccountsController < ApplicationController
                                 :versions, :password, :password_confirmation,
                                 :updated_at, label_ids: [] )
   end
-
 end
 # vi:set et ft=ruby ts=2 sw=2 ai:

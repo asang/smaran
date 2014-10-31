@@ -74,4 +74,9 @@ class ApplicationController < ActionController::Base
     end
     result
   end
+
+  def handle_error(format, model, action)
+    format.html { render :action => action }
+    format.xml { render :xml => model.errors, :status => :unprocessable_entity }
+  end
 end
