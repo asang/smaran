@@ -33,3 +33,4 @@ doc/
 Gemfile.lock
 tags
 assets/
+coverage/
