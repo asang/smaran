@@ -142,7 +142,7 @@ describe 'Account Requests', :type => :feature do
     end
     it 'should allow editing' do
       new_name = "NEW_#{account.name}"
-      new_url = "NEW_" + account.url
+      new_url = FactoryGirl.build(:account).url
       visit account_path(account)
 
       click_link 'Edit'

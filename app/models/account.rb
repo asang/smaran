@@ -20,7 +20,7 @@ class Account < ActiveRecord::Base
     :format => { :with => /\A[A-Za-z0-9\s_-]+/ }
   validates :username, :presence => true
   validates :url, :presence => true,
-    :format => {:with => /https?:\/\/.*/}
+    :format => {:with => /\Ahttps?:\/\/.*\z/}
   validates :password, :presence => true, :confirmation => true
 
   validate :validate_attachments
