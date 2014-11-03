@@ -19,4 +19,8 @@ FactoryGirl.define do
     f.sequence(:name) { |n| "Label foo#{n}" }
     f.sequence(:description) { |n| "description #{n}" }
   end
+
+  factory :comment do |f|
+    f.sequence(:content) { |c| "Comment #{c}" }
+  end
 end
