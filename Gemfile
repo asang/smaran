@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 ruby '2.0.0'
 #ruby-gemset=smaran
 
-gem 'rails', '~> 4.1.0'
+gem 'rails', '~> 4.1.7'
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.0.5'
 gem 'prototype-rails', :git => 'git://github.com/rails/prototype-rails.git'
