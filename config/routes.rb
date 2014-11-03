@@ -10,7 +10,7 @@ Smaran::Application.routes.draw do
   get '/login', :controller => 'user_sessions', :action => 'new'
   get '/logout', :controller => 'user_sessions', :action => 'destroy'
   resources :accounts do
-    resources :comments
+    resources :comments, except: :index
   end
   resources :search_suggestions
 

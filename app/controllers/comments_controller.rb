@@ -1,10 +1,6 @@
 class CommentsController < ApplicationController
   before_filter :load_commentable
 
-  def index
-    @comments = @commentable.logs
-  end
-
   def create
     @comment = @commentable.logs.new(params[:comment])
     if @comment.save
