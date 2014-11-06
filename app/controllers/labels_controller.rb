@@ -20,7 +20,8 @@ class LabelsController < ApplicationController
     begin
       @label = Label.find(params[:id])
     rescue ActiveRecord::RecordNotFound => e
-      @label = Label.find_by_name(params[:id]) if @label.nil?
+      redirect_to labels_url
+      return
     end
     respond_to do |format|
       format.html
