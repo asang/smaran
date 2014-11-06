@@ -17,6 +17,14 @@ describe Comment, :type => :feature do
     create_account
   end
 
+  def add_comment
+    expect(page).to have_content(account.name)
+    fill_in 'comment_content', with: comment.content
+    click_link_or_button 'New Log'
+    expect(page).to have_content(comment.content)
+    expect(page).to have_content('Log created')
+  end
+
   it 'should fail to create empty comment' do
     expect(page).to have_content(account.name)
     click_link_or_button 'New Log'
@@ -24,10 +32,15 @@ describe Comment, :type => :feature do
   end
 
   it 'should be able to add comment' do
-    expect(page).to have_content(account.name)
-    fill_in 'comment_content', with: comment.content
-    click_link_or_button 'New Log'
-    expect(page).to have_content(comment.content)
-    expect(page).to have_content('Log created')
+    add_comment
+  end
+
+  it 'should be able to delete single comment' do
+    add_comment
+    visit account_path(account)
+    within('#logs') do
+      click_link_or_button 'Remove'
+    end
+    expect(page).to have_content('Log was deleted')
   end
 end
