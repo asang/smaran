@@ -17,11 +17,11 @@ describe Comment, :type => :feature do
     create_account
   end
 
-  def add_comment
+  def add_comment(c)
     expect(page).to have_content(account.name)
-    fill_in 'comment_content', with: comment.content
+    fill_in 'comment_content', with: c.content
     click_link_or_button 'New Log'
-    expect(page).to have_content(comment.content)
+    expect(page).to have_content(c.content)
     expect(page).to have_content('Log created')
   end
 
@@ -32,15 +32,32 @@ describe Comment, :type => :feature do
   end
 
   it 'should be able to add comment' do
-    add_comment
+    add_comment(comment)
   end
 
   it 'should be able to delete single comment' do
-    add_comment
+    add_comment(comment)
     visit account_path(account)
     within('#logs') do
       click_link_or_button 'Remove'
     end
     expect(page).to have_content('Log was deleted')
+  end
+
+  it 'should be able to delete specific comment' do
+    add_comment(comment)
+    id1 = Comment.last.id
+    comment2 = FactoryGirl.build(:comment)
+    add_comment(comment2)
+    id2 = Comment.last.id
+    visit account_path(account)
+    within('#logs') do
+      within("#log_#{id2}") do
+        click_link_or_button 'Remove'
+      end
+    end
+    expect(page).to have_content('Log was deleted')
+    expect(page).to_not have_content( comment2.content )
+    expect(page).to have_content( comment.content )
   end
 end

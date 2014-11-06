@@ -1,7 +1,8 @@
 <% if @comments.count > 0 %>
     <table id="item-list">
       <% @comments.each_with_index do |l, i| %>
-          <tr style="border: 1px ; border-color: black">
+          <tr style="border: 1px ; border-color: black"
+			  id='log_<%=l.id %>'>
             <td style="vertical-align: top; text-align: left"><%= serial_number(i) %>.</td>
             <td>
               <%=h l.content %>
