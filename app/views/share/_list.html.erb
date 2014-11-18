@@ -3,14 +3,11 @@
   So when this partial is called from Labels Controller, hell breaks loose.
 -->
 <% if controller.is_a?(AccountsController) %>
-  <div class="apple_pagination">
-    <div class="page_info">
-      <%= page_entries_info @accounts %>
-    </div>
-    <%= will_paginate @accounts %>
+  <div class="container">
+    <%= will_paginate @accounts, renderer: BootstrapPagination::Rails %>
   </div>
 <% end %>
-<table id="item-list" class="<%= table_class %>">
+<table id="item-list" class="text-small <%= table_class %>">
   <tr>
     <th>Sr. No.</th>
     <th><%= sortable "name", "Account", "Name" %></th>
@@ -34,14 +31,16 @@
       </td>
       <td><%=h account.updated_at.to_date.to_s(:rfc822) %></td>
       <td class="list-actions">
-        <%= link_to 'Edit', edit_account_path(account) %> |
-        <%= link_to "Duplicate", {:id => account.id,
-          :action => "duplicate", :controller => 'accounts'} %> |
+        <%= link_to 'Edit', edit_account_path(account),
+            { class: 'btn btn-default btn-xs' } %>
+        <%= link_to "Duplicate", { id: account.id, action: 'duplicate', controller: 'accounts' },
+                        class: 'btn btn-default btn-xs' %>
         <%= link_to "Email", {:id => account.id,
-          :action => "send_by_email", :controller => 'accounts'} %> |
+                        :action => "send_by_email", :controller => 'accounts'},
+                        class: 'btn btn-default btn-xs' %>
          <%= link_to "Remove", account,
           data: { confirm: "Are you sure you want to delete #{account.name}?" },
-          :method => :delete %>
+          :method => :delete, class: 'btn btn-xs btn-danger' %>
       </td>
     </tr>
   <% end %>

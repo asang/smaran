@@ -27,7 +27,7 @@ describe 'Account Requests', :type => :feature do
     expect(current_path).to eq(new_account_path)
     click_button 'Create Account'
     expect(current_path).to eq(accounts_path)
-    expect(page).to have_content('6 errors prohibited this account from being saved')
+    expect(page).to have_content('can\'t be blank')
   end
 
   it 'should create new account' do
@@ -117,7 +117,7 @@ describe 'Account Requests', :type => :feature do
     expect(page).to_not have_content(new_name.upcase)
     click_link_or_button 'redo'
     expect(page).to have_content('Undid update')
-    expect(page).to have_content("Accounts details for #{new_name.upcase}")
+    expect(page).to have_content("Details for #{new_name.upcase}")
   end
 
   it 'should undo and redo create' do
@@ -174,7 +174,7 @@ describe 'Account Requests', :type => :feature do
       fill_in 'account_password_confirmation', with: 'foo'
       click_button 'Update Account'
       expect(current_path).to eq(account_path(account))
-      expect(page).to have_content('Password confirmation doesn\'t match Password')
+      expect(page).to have_content('doesn\'t match Password')
       expect(Account.find(account.id).password).to eql(old_pass)
     end
 

@@ -1,10 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smaran :: Account Management System</title>
-    <%= stylesheet_link_tag :all, :cache => true, :media => "all" %>
-	  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tag %>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <%= stylesheet_link_tag "application", :media => "all" %>
+
+    <!-- For third-generation iPad with high-resolution Retina display: -->
+    <!-- Size should be 144 x 144 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+
+    <!-- For iPhone with high-resolution Retina display: -->
+    <!-- Size should be 114 x 114 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+
+    <!-- For first- and second-generation iPad: -->
+    <!-- Size should be 72 x 72 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+
+    <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+    <!-- Size should be 57 x 57 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+
+    <!-- For all other devices -->
+    <!-- Size should be 32 x 32 pixels -->
+    <!-- <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %> -->
+
+	<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= yield :head %>
     <script type="text/javascript">
       var RecaptchaOptions = {
@@ -13,62 +42,75 @@
     </script>
 </head>
   <body>
-    <div id="banner">
-      <%= "Smaran Account Management System" %>
-    </div>
-    <% if current_user %>
-    <div id="side">
-        <%= link_to 'Home', root_url %><br />
-        <%= link_to 'List of Accounts', accounts_path %><br />
-        <%= link_to 'List of Labels', labels_path %><br />
-        <hr/>
-        <%= link_to 'Create New Account', new_account_path %><br/>
-        <%= link_to 'Create New Label', new_label_path %>
-        <hr/>
-        <table id="item-list" class="<%= table_class %>">
+	<%= nav_bar fixed: :top, brand: 'Smaran', responsive: true do %>
+		<%= menu_group do %>
+			<%= menu_item 'Home', root_url %>
+      <% if current_user %>
+        <%= menu_item 'Accounts', accounts_path %>
+        <%= drop_down 'Labels' do %>
+          <%= menu_divider %>
+          <%= menu_item 'All', labels_path %>
           <% Label.sorted_labels_by_desc.each do |l| -%>
-            <tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
-              <td>
-                <%= link_to truncate(l.description, :length => 20),
-                  label_path(l) %>
-              </td>
-            </tr>
-          <% end -%>
-        </table>
-        <hr/>
-        <%= link_to "Change Password", edit_user_path(:current) %><br />
-        <%= link_to "Logout", logout_path %>
-    </div>
-    <% end %>
-    <div id="main">
-      <div id="left">
-        <% if current_user %>
-          <% if not controller.is_a?(AccountsController) or \
-		  		controller.action_name != 'index' %>
-            <%= form_tag accounts_path, :method => :get,
-              :controller => 'accounts' do %>
-              <%= text_field_tag :search, params[:search] %>
-              <%= submit_tag "Search", :name => nil %>
-            <% end %>
-          <% else %>
-            <%= form_tag accounts_path, :method => :get,
-              :controller => 'accounts', :remote => true,
-              :autocomplete => :off do %>
-              <%= text_field_tag :search, params[:search] %>
-              <%= submit_tag "Search", :name => nil %>
-            <% end %>
-          <% end %>
-        </div>
-        <div>
-          <%= form_tag hide_passwords_path, :method => :post,
-                  :controller => 'accounts' do %>
-            <%= check_box_tag :hide_passwords, '', session[:hide_passwords] %>
-            <%= submit_tag "Hide Passwords?", :name => nil %>
+            <%= menu_item truncate(l.description, :length => 20), label_path(l) %>
           <% end %>
         <% end %>
+        <%= menu_group do %>
+          <%= drop_down 'New...' do %>
+            <%= menu_item 'New Account', new_account_path %>
+            <%= menu_item 'New Label', new_label_path %>
+          <% end -%>
+        <% end -%>
+        <% if controller.is_a?(LabelsController) -%>
+          <% if controller.action_name == 'show' %>
+            <%= menu_item 'Save as PDF', label_path(@label, :format => 'pdf') %>
+          <% end -%>
+        <% elsif controller.is_a?(AccountsController) -%>
+            <%= menu_group do %>
+              <%= drop_down 'Save as...' do %>
+                <%= menu_item 'Save as Excel', accounts_path(:format => 'xls') %>
+                <%= menu_item 'Save as PDF', accounts_path(:format => 'pdf') %>
+                <%= menu_item 'Save as CSV', accounts_path(:format => 'csv') %>
+              <% end -%>
+            <% end -%>
+        <% end -%>
+        <%= menu_group pull: :right do %>
+          <%= menu_item "Change Password", edit_user_path(:current),
+              class: 'btn' %>
+          <%= menu_item "Logout", logout_path, class: 'btn btn-sm' %>
+        <% end %>
+		  <% end %>
+		<% end %>
+  <% end %>
+  <div class="container">
+    <% if current_user %>
+      <div class="row">
+        <div class="col-xs-10 col-sm-6 col-lg-8">
+            <%= form_tag accounts_path, method: :get, controller: 'accounts', :remote => true,
+                      :autocomplete => :off, :class => 'form', role: 'form' do %>
+              <%= text_field_tag :search, params[:search] %>
+              <%= submit_tag "Search", :name => nil %>
+            <% end -%>
         </div>
-      <br/>
-      <%= yield %>
-    </div>
+        <div class="col-xs-2 col-sm-6 col-lg-4">
+            <% if controller.is_a?(AccountsController) %>
+                <%= form_tag hide_passwords_path, :method => :post,
+                      :controller => 'accounts', :class => 'form' do %>
+                  <%= check_box_tag :hide_passwords, '', session[:hide_passwords] %>
+                  <%= submit_tag "Hide Passwords?", :name => nil %>
+                <% end -%>
+            <% end %>
+        </div>
+      </div>
+    <% end %>
+    </div> <!-- /container -->
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 .col-sm-6 .col-lg-8">
+          <%= bootstrap_flash %>
+          <%= yield %>
+        </div>
+      </div><!--/row-->
+  </div> <!-- /container -->
   </body>
 </html>
+<!-- vi:set et ts=2 sw=2 ai et: -->

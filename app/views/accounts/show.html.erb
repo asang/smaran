@@ -1,120 +1,127 @@
-<p id="notice"><%= raw(notice) %></p>
-<%= link_to "Email", {:id => @account.id, :action => "send_by_email"} %>
-<table>
-  <tr>
-    <td valign="top" style="width: 40%" />
-      <fieldset class="section">
-        <legend>Accounts details for <%= @account.name %></legend>
-        <p>
-          <b>URL:</b>
-          <%= link_to "#{@account.url}",
-            @account.url, {:target => "_blank" } %>
-        </p>
-        <p>
-          <b>Username:</b>
-          <%= @account.username %>
-        </p>
-        <% if not session[:hide_passwords] %>
-          <p>
-            <b>Password:</b>
-            <%= @account.password %>
-          </p>
-        <% end %>
-        <p>
-          <b>Labels:</b>
-        <% if @account.labels.count > 3 %>
-          <table>
-            <tr>
-            <%
-            start_idx = 0
-            end_idx = 0
-            while true
-              end_idx = start_idx + 2
-              if end_idx >= @account.labels.count - 1
-                end_idx = @account.labels.count - 1
-              end
-            %>
-              <td valign="top" id="labels">
-                <ul>
-                  <% for l in @account.labels[start_idx..end_idx] %>
-                    <li>
-                      <%= link_to l.description, label_path(l) %>
-                    </li>
-                  <% end %>
-                </ul>
-              </td>
-              <%
-                start_idx = end_idx + 1
-                break if end_idx >= @account.labels.count - 1
-              %>
-            <% end %>
-            </tr>
-          </table>
-        <% else %>
-          <ul id="labels">
-            <% for l in @account.labels %>
-              <li>
-                <%= link_to l.description, label_path(l) %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-      </p>
+<div class="row">
+<div class="span4">
+  <h3>Details for <%= @account.name %></h3>
+    <p>
+      <b>URL:</b>
+      <%= link_to "#{@account.url}",
+        @account.url, {:target => "_blank" } %>
+    </p>
+    <p>
+      <b>Username:</b>
+      <%= @account.username %>
+    </p>
+    <% if not session[:hide_passwords] %>
       <p>
-        <b>Last Updated:</b>
-        <%=h @account.updated_at.to_date.to_s(:rfc822) %>
+        <b>Password:</b>
+        <%= @account.password %>
       </p>
-      <p>
-        <b>Details</b>
-		<%=raw @markdown.render(@account.comments) unless @account.comments.nil?  %>
-      </p>
-    </td>
-    <td style="width: 1%" />
-    <td valign="top">
-      <% if @account.assets.count > 0 %>
-        <fieldset class="section" id="attachments">
-            <legend>Attached files</legend>
-          <div id="attachment_list">
-            <%= render :partial => "share/attachment",
-              :collection => @account.assets.sort {
-                  |x,y| y.updated_at <=> x.updated_at }
-            %>
-          </div>
-        </fieldset>
-      <% end %>
-      <% if @account.logs.count > 0 %>
-        <fieldset class="section" id="logs">
-            <legend>Log Entries</legend>
-            <%= render "comments/comments" %>
-        </fieldset>
-      <% end %>
-      <br/>
-      <% if @account.assets.count <= Account::Max_Attachments %>
-          <legend>New attachment</legend>
-          <fieldset class="section" id="add_attachment">
-            Max Size: <%= Account::Max_Attachment_Size/1.megabyte %>MB
-            <%= form_for(@account, :html => { :multipart => true }) do |f| %>
-                <%= f.label :assets, "Attachment" %>
-                <%= f.file_field :assets %>
-                <div class="actions">
-                  <%= f.submit "Submit" %>
-                </div>
-            <% end %>
-          </fieldset>
-      <% end %>
-      <%= render "comments/form" %>
-    </td>
-  </tr>
-</table>
+    <% end %>
+    <p>
+      <b>Labels:</b>
+    <% if @account.labels.count > 3 %>
+      <table class="table">
+        <tr>
+        <%
+        start_idx = 0
+        end_idx = 0
+        while true
+          end_idx = start_idx + 2
+          if end_idx >= @account.labels.count - 1
+            end_idx = @account.labels.count - 1
+          end
+        %>
+          <td valign="top" id="labels">
+            <ul>
+              <% for l in @account.labels[start_idx..end_idx] %>
+                <li>
+				  <%= link_to l.description, label_path(l),
+						{ :target => '_blank' } %>
+                </li>
+              <% end %>
+            </ul>
+          </td>
+          <%
+            start_idx = end_idx + 1
+            break if end_idx >= @account.labels.count - 1
+          %>
+        <% end %>
+        </tr>
+      </table>
+    <% else %>
+      <ul id="labels">
+        <% for l in @account.labels %>
+          <li>
+            <%= link_to l.description, label_path(l),
+				  	{ :target => '_blank' } %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </p>
+  <p>
+    <b>Last Updated:</b>
+    <%=h @account.updated_at.to_date.to_s(:rfc822) %>
+  </p>
+  <div class="panel panel-default">
+	<div class="panel-body">
+	  <%=raw @markdown.render(@account.comments) unless @account.comments.nil?  %>
+    </div>
+  </div>
+</div>
+<div class="span5">
+  <% if @account.assets.count > 0 %>
+  <% if @account.logs.count > 0 %>
+    <h4>Log Entries</h4>
+    <%= render "comments/comments" %>
+  <% end %>
+  <h4>Attachments</h4>
+  <div id="attachments">
+    <table class="table" id="attachment_list">
+  	<th>Name</th>
+  	<th>Size</th>
+  	<th>Date</th>
+  	<th>Actions</th>
+  	</tr>
+      <%= render :partial => "share/attachment",
+        :collection => @account.assets.sort {
+            |x,y| y.updated_at <=> x.updated_at }
+      %>
+    </table>
+  </div>
+  <% end %>
+  <% if @account.assets.count <= Account::Max_Attachments %>
+      <h4>Add new attachment</h4>
+      <div class="section" id="add_attachment">
+        Max Size: <%= Account::Max_Attachment_Size/1.megabyte %>MB
+        <%= form_for(@account, :html => { :multipart => true }) do |f| %>
+            <%= f.label :assets, "Attachment" %>
+            <%= f.file_field :assets %>
+            <div class="actions">
+              <%= f.submit "Submit" %>
+            </div>
+        <% end %>
+      </div>
+  <% end %>
+  <br/>
+  <% if @account.logs.count > 0 -%>
+	  <div id="logs">
+		<%= render "comments/comments" %>
+	  </div>
+  <% end -%>
+  <%= render "comments/form" %>
+</div>
+</div>
 
-</fieldset>
 <p id="pdf_links">
-<%= link_to 'Save as PDF', account_path(@account, :format => 'pdf') %> |
-<%= link_to 'Edit', edit_account_path(@account) %> |
-<%= link_to 'List of Accounts', accounts_path %> |
-<%= link_to "Duplicate", {:id => @account.id, :action => "duplicate"} %> |
-<%= link_to "Email", {:id => @account.id, :action => "send_by_email"} %>
+<%= link_to 'Save as PDF', account_path(@account, :format => 'pdf'),
+		class: 'btn btn-sm btn-primary' %>
+<%= link_to 'Edit', edit_account_path(@account), class: 'btn btn-sm btn-primary' %>
+<%= link_to 'List of Accounts', accounts_path, class: 'btn btn-sm btn-primary' %>
+<%= link_to "Duplicate", {:id => @account.id, :action => "duplicate"},
+		class: 'btn btn-sm btn-primary' %>
+<%= link_to "Email", {:id => @account.id, :action => "send_by_email"},
+		class: 'btn btn-sm btn-primary' %>
 <%= link_to "Remove", @account,
       data: { confirm: "Are you sure you want to delete #{@account.name}?" },
-      :method => :delete %>
+      :method => :delete, class: 'btn btn-sm btn-danger' %>
 </p>

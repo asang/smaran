@@ -2,7 +2,7 @@
 <% if notice %>
     <p id="notice"><%= raw(notice) %></p>
 <% end %>
-<table id="item-list">
+<table id="item-list" class="table table-striped">
   <tr>
     <th><%= sortable "name", "Label", "Label" %></th>
     <th><%= sortable "description", "Label", "Description" %></th>

@@ -1,7 +1,6 @@
 class AccountPdf < Prawn::Document
   def initialize(account)
     super(top_margin: 75, page_size: 'A4', page_layout: :landscape)
-    min_version(1.5)
     @font_size = 10
     @account = account
     account_name

@@ -9,15 +9,11 @@ end
 
 Then(/^I should see the "([^"]*)"$/) do |result|
   if result == '+'
-    within('#main') do
-      page.should have_content('Label was successfully created')
-      page.should have_content("#{@label.name.downcase}")
-      page.should have_content("#{@label.description}")
-    end
+    page.should have_content('Label was successfully created')
+    page.should have_content("#{@label.name.downcase}")
+    page.should have_content("#{@label.description}")
   else
-    within('#main') do
-      page.should_not have_content("#{@label.name.downcase}")
-    end
+    page.should_not have_content("#{@label.name.downcase}")
   end
 end
 
@@ -34,9 +30,7 @@ When(/^I am on labels page$/) do
 end
 
 When(/^I delete the label$/) do
-  within('#main') do
-    within('#item-list') do
-      click_link_or_button 'Remove'
-    end
+  within('#item-list') do
+    click_link_or_button 'Remove'
   end
 end

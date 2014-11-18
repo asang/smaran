@@ -1,9 +1,9 @@
-<h1>Log In</h1>
-<%= form_for(@user_session) do |form| %>
+<h2 class="page-header">Log In</h2>
+<%= form_for(@user_session, html: { role: 'form', class: 'form' } ) do |form| %>
   <% if @user_session.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user_session.errors.count, "error") %>
-        prohibited this account from being saved:</h2>
+    <h5><%= pluralize(@user_session.errors.count, "error") %>
+        prohibited this account from being saved:</h5>
+    <div id="error_explanation" class="alert alert-error">
       <ul>
         <% @user_session.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -11,20 +11,24 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
-    <%= form.label :username, "Username" %><br/>
-    <%= form.text_field :username %>
+  <div class="form-group">
+    <%= form.label :username, "Username", class: 'control-label' %><br/>
+	<div class="controls">
+    	<%= form.text_field :username, class: 'form-control' %>
+	</div>
   </div>
-  <div class="field">
-    <%= form.label :password, "Password" %><br/>
-    <%= form.password_field :password %>
+  <div class="form-group">
+    <%= form.label :password, "Password", class: 'control-label' %><br/>
+	<div class="controls">
+    	<%= form.password_field :password, class: 'form-control' %>
+	</div>
   </div>
   <% if not is_local_client %>
     <div id="captcha">
       <%= render '/share/recaptcha' %>
     </div>
   <% end %>
-  <div class="actions">
-    <%= form.submit "Submit" %>
+  <div class="form-actions">
+    <%= form.submit "Submit", class: 'btn btn-primary btn-large' %>
   </div>
 <% end %>

@@ -16,10 +16,11 @@ module ApplicationHelper
   end
 
   def table_class
-    html = ""
+    html = "table table-striped"
     if !controller.is_a?(AccountsController)
-      html << "sortable"
+      html << "table table-striped sortable"
     end
+	html
   end
 
   # Returns the value of serial number after taking "page" number into account

@@ -1,16 +1,22 @@
 <% if @comments.count > 0 %>
-    <table id="item-list">
+    <table id="item-list" class="table table-responsive">
+		<tr>
+      <th>Sr</th>
+      <th>Comments</th>
+      <th>Action</th>
+		</tr>
       <% @comments.each_with_index do |l, i| %>
-          <tr style="border: 1px ; border-color: black"
-			  id='log_<%=l.id %>'>
+          <tr id='log_<%=l.id %>'>
             <td style="vertical-align: top; text-align: left"><%= serial_number(i) %>.</td>
             <td>
               <%=h l.content %>
-              &nbsp;&nbsp;on
-              <i><%=h l.updated_at.strftime('%d, %b %y %l:%M %p (%Z)') %></i>
+              <span class="text-success">Added on
+                <%=h l.updated_at.strftime('%d, %b %y %l:%M %p (%Z)') %></span>
+            </td>
+            <td>
               <%= link_to "Remove", [@commentable, l],
                     data: { confirm: "Are you want to delete comment?" },
-                    :method => :delete %>
+                    :method => :delete, class: 'btn btn-xs btn-danger' %>
             </td>
           </tr>
       <% end %>

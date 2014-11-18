@@ -9,6 +9,6 @@ class VersionsController < ApplicationController
     link_name = params[:redo] == "true" ? "undo" : "redo"
     link = view_context.link_to(link_name,
               revert_version_path(@version.next, :redo => !params[:redo]), :method => :post)
-    redirect_to :back, :notice => "Undid #{@version.event}. #{link}"
+    redirect_to :back, :notice => "Undid #{@version.event}. #{link}".html_safe
   end
 end

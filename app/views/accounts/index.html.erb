@@ -1,21 +1,17 @@
-<h1>List of Accounts @ <%= Time.now.to_s %></h1>
-
 <% content_for :head do %>
+<div class="container">
+	<div class="row">
+	  <div class="col-xs-12 .col-sm-6 .col-lg-8">
+		<h2 class="page-header">List of Accounts</h2>
+	  </div>
+	</div>
+</div>
 <script type="text/javascript">
   $(document).ready(function() {
     $(".apple_pagination a").attr('data-remote', 'true');
   });
 </script>
 <% end %>
-<p id="notice"><%= raw(notice) %></p>
-
 <div id="accounts">
   <%= render 'share/list', :list => @accounts %>
 </div>
-
-<br />
-<%= link_to 'Save as Excel', accounts_path(:format => 'xls') %> |
-<%= link_to 'Save as PDF', accounts_path(:format => 'pdf') %> |
-<%= link_to 'Save as CSV', accounts_path(:format => 'csv') %> |
-<%= link_to 'New Account', new_account_path %> |
-<%= link_to 'New Label', new_label_path %>

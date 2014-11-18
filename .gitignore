@@ -32,5 +32,5 @@ doc/
 *.tgz
 Gemfile.lock
 tags
-assets/
+/assets/
 coverage/

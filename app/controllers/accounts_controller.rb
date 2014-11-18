@@ -73,7 +73,7 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.save
         format.html { redirect_to(@account,
-                          notice: "Account was successfully created. #{undo_link}") }
+                          notice: "Account was successfully created. #{undo_link}".html_safe) }
         format.xml  { render :xml => @account, :status => :created, :location => @account }
       else
         handle_error(format, @account, 'new')
@@ -89,7 +89,7 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.update_attributes(account_params)
         format.html { redirect_to(@account,
-                            notice: "Account was successfully updated. #{undo_link}") }
+                            notice: "Account was successfully updated. #{undo_link}".html_safe) }
         format.xml  { head :ok }
       else
         handle_error(format, @account, 'edit')
@@ -104,7 +104,7 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(accounts_url,
-                      notice: "Account was deleted #{undo_link}") }
+                      notice: "Account was deleted #{undo_link}".html_safe) }
       format.xml  { head :ok }
     end
   end
