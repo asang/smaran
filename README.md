@@ -3,10 +3,6 @@
 [![Test Coverage](https://codeclimate.com/github/asang/smaran/badges/coverage.svg)](https://codeclimate.com/github/asang/smaran)
 [![security](https://hakiri.io/github/asang/smaran/master.svg)](https://hakiri.io/github/asang/smaran/master)
 
-You can chat with us using Gitter:
-
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/asang/smaran?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 # Smaran: RoR based secure personal information management system
 Smaran is a [Ruby On Rails](http://rubyonrails.org) based secure password and
 personal information management (aka Account Management) system. Password, Url,
